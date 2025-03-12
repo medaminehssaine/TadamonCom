@@ -149,7 +149,12 @@ const App = () => {
         />
       </View>
 
-      <LinearGradient colors={['#2563eb', '#1d4ed8']} style={styles.testimonialSection}>
+      <LinearGradient 
+        colors={['#12372A', '#436850']} // Using the dark and medium green
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.testimonialSection}
+      >
         <Text style={styles.sectionTitleWhite}>Impact Stories</Text>
         <FlatList
           horizontal
@@ -307,11 +312,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitleWhite: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#FBFADA',
+    color: '#FBFADA', // Cream color for title
     textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: 24,
+    textShadowColor: 'rgba(0, 0, 0, 0.1)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   cardContainer: {
     paddingVertical: 16,
@@ -405,28 +413,39 @@ const styles = StyleSheet.create({
   },
   testimonialSection: {
     padding: 24,
-    backgroundColor: '#436850',
+    margin: 16,
+    borderRadius: 20,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 16,
+    elevation: 6,
   },
   testimonialContainer: {
     paddingVertical: 16,
   },
   testimonialCard: {
     width: width * 0.8,
-    backgroundColor: 'rgba(251, 250, 218, 0.1)',
-    borderRadius: 8,
-    padding: 16,
+    backgroundColor: 'rgba(251, 250, 218, 0.1)', // Using FBFADA with opacity
+    borderRadius: 12,
+    padding: 20,
     margin: 8,
     borderWidth: 1,
-    borderColor: '#FBFADA',
+    borderColor: '#ADBC9F', // Light sage green for border
+    backdropFilter: 'blur(10px)',
   },
   testimonialText: {
-    color: '#FBFADA',
+    color: '#FBFADA', // Cream color for text
     fontStyle: 'italic',
-    marginBottom: 8,
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 12,
   },
   testimonialAuthor: {
-    color: '#FBFADA',
+    color: '#ADBC9F', // Light sage green for author
     fontWeight: 'bold',
+    fontSize: 14,
   },
   footer: {
     backgroundColor: '#12372A',
