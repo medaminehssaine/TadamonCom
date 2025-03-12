@@ -11,16 +11,12 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { I18nProvider, useI18n } from "@/scripts/i18n.context";
-
-
 const { width } = Dimensions.get('window');
 
 const App = () => {
   const [activeCommunityTab, setActiveCommunityTab] = useState('Active Needs');
   const [activeDonorTab, setActiveDonorTab] = useState('Urgent Needs');
   const [activeOrgTab, setActiveOrgTab] = useState('Active Operations');
-  const { t, locale, setLocale } = useI18n();
 
   const needsData = [
     { id: '1', title: 'Medical Supplies', priority: 'High', status: 'Matched', eta: '24 hours' },
@@ -76,9 +72,9 @@ const App = () => {
           <Text style={styles.logo}>Tadamon<Text style={styles.logoSpan}>Com</Text></Text>
           <View style={styles.navRight}>
             <View style={styles.languageSelector}>
-              <TouchableOpacity onPress={() => setLocale('ar')}><Text style={styles.langText}>العربية</Text></TouchableOpacity>
-              <TouchableOpacity onPress={() => setLocale('en')}><Text style={styles.langText}>EN</Text></TouchableOpacity>
-              <TouchableOpacity onPress={() => setLocale('fr')}><Text style={styles.langText}>FR</Text></TouchableOpacity>
+              <TouchableOpacity><Text style={styles.langText}>العربية</Text></TouchableOpacity>
+              <TouchableOpacity><Text style={styles.langText}>EN</Text></TouchableOpacity>
+              <TouchableOpacity><Text style={styles.langText}>FR</Text></TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.navButton}>
               <Text style={styles.navButtonText}>Login / Register</Text>
@@ -158,7 +154,6 @@ const App = () => {
         />
       </View>
 
-      {/* Testimonials */}
       <LinearGradient colors={['#2563eb', '#1d4ed8']} style={styles.testimonialSection}>
         <Text style={styles.sectionTitleWhite}>Impact Stories</Text>
         <FlatList
@@ -472,12 +467,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppWrapper = () => {
-  return (
-    <I18nProvider>
-      <App />
-    </I18nProvider>
-  );
-};
-
-export default AppWrapper;
+export default App;
