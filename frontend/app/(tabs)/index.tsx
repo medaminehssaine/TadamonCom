@@ -183,10 +183,10 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#FBFADA',
   },
   navbar: {
-    backgroundColor: 'white',
+    backgroundColor: '#ADBC9F',
     padding: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -202,10 +202,13 @@ const styles = StyleSheet.create({
   logo: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2563eb',
+    color: '#12372A', // Darkest green from palette
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   logoSpan: {
-    color: '#f59e0b',
+    color: '#436850', // Second darkest green
   },
   navRight: {
     flexDirection: 'row',
@@ -213,17 +216,18 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   navButton: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#12372A',
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 4,
   },
   navButtonText: {
-    color: 'white',
+    color: '#FBFADA',
     fontWeight: '500',
   },
   hero: {
     height: 400,
+    backgroundColor: '#436850', // Second darkest green
   },
   heroContent: {
     flex: 1,
@@ -232,13 +236,13 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     fontSize: 32,
-    color: 'white',
+    color: '#FBFADA',
     textAlign: 'center',
     marginBottom: 16,
   },
   heroText: {
     fontSize: 18,
-    color: 'white',
+    color: '#FBFADA',
     textAlign: 'center',
     marginBottom: 32,
   },
@@ -248,26 +252,28 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   primaryButton: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#12372A',
     padding: 16,
     borderRadius: 4,
   },
   secondaryButton: {
-    backgroundColor: 'white',
+    backgroundColor: '#FBFADA',
     padding: 16,
     borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#12372A',
   },
   buttonText: {
-    color: 'white',
+    color: '#FBFADA',
     fontWeight: '500',
   },
   buttonTextSecondary: {
-    color: '#2563eb',
+    color: '#12372A',
     fontWeight: '500',
   },
   card: {
     width: width * 0.8,
-    backgroundColor: 'white',
+    backgroundColor: '#FBFADA',
     borderRadius: 8,
     margin: 8,
     shadowColor: '#000',
@@ -275,31 +281,35 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: '#ADBC9F',
   },
   needItem: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#FBFADA',
     borderRadius: 8,
     padding: 16,
     margin: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#ADBC9F',
   },
   priorityHigh: {
-    backgroundColor: '#dc2626',
+    borderLeftColor: '#12372A',
   },
   section: {
     padding: 24,
-    backgroundColor: 'white',
+    backgroundColor: '#FBFADA',
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1f2937',
+    color: '#12372A',
     textAlign: 'center',
     marginBottom: 16,
   },
   sectionTitleWhite: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#FBFADA',
     textAlign: 'center',
     marginBottom: 16,
   },
@@ -307,13 +317,13 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   cardIcon: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#ADBC9F',
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardIconText: {
-    color: 'white',
+    color: '#12372A',
     fontSize: 24,
     fontWeight: 'bold',
   },
@@ -324,7 +334,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 8,
-    color: '#1f2937',
+    color: '#12372A',
   },
   dashboardHeader: {
     flexDirection: 'row',
@@ -335,7 +345,7 @@ const styles = StyleSheet.create({
   dashboardTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#12372A',
   },
   tabContainer: {
     flexDirection: 'row',
@@ -346,13 +356,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 4,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: '#ADBC9F',
   },
   activeTab: {
-    backgroundColor: '#2563eb',
+    backgroundColor: '#12372A',
   },
   activeTabText: {
-    color: 'white',
+    color: '#FBFADA',
   },
   needList: {
     paddingBottom: 16,
@@ -366,7 +376,7 @@ const styles = StyleSheet.create({
   needTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1f2937',
+    color: '#12372A',
   },
   priorityBadge: {
     paddingHorizontal: 8,
@@ -374,18 +384,18 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   priorityMedium: {
-    backgroundColor: '#f59e0b',
+    backgroundColor: '#436850',
   },
   priorityLow: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#ADBC9F',
   },
   priorityText: {
-    color: 'white',
+    color: '#FBFADA',
     fontSize: 12,
     fontWeight: '500',
   },
   needDescription: {
-    color: '#4b5563',
+    color: '#436850',
     marginBottom: 8,
   },
   needFooter: {
@@ -395,34 +405,37 @@ const styles = StyleSheet.create({
   },
   testimonialSection: {
     padding: 24,
+    backgroundColor: '#436850',
   },
   testimonialContainer: {
     paddingVertical: 16,
   },
   testimonialCard: {
     width: width * 0.8,
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: 'rgba(251, 250, 218, 0.1)',
     borderRadius: 8,
     padding: 16,
     margin: 8,
+    borderWidth: 1,
+    borderColor: '#FBFADA',
   },
   testimonialText: {
-    color: 'white',
+    color: '#FBFADA',
     fontStyle: 'italic',
     marginBottom: 8,
   },
   testimonialAuthor: {
-    color: 'white',
+    color: '#FBFADA',
     fontWeight: 'bold',
   },
   footer: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#12372A',
     padding: 24,
   },
   footerLogo: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2563eb',
+    color: '#FBFADA',
     marginBottom: 16,
   },
   footerColumns: {
@@ -436,24 +449,24 @@ const styles = StyleSheet.create({
     minWidth: 150,
   },
   footerHeading: {
-    color: 'white',
+    color: '#FBFADA',
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 12,
   },
   footerLink: {
-    color: '#f3f4f6',
+    color: '#ADBC9F',
     marginBottom: 8,
   },
   copyright: {
-    color: '#9ca3af',
+    color: '#ADBC9F',
     textAlign: 'center',
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255,255,255,0.1)',
+    borderTopColor: 'rgba(251, 250, 218, 0.2)',
   },
   langText: {
-    color: '#1f2937',
+    color: '#12372A',
     fontSize: 14,
   },
 });
