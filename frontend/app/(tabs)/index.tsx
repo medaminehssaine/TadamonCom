@@ -71,11 +71,6 @@ const App = () => {
         <View style={styles.navContainer}>
           <Text style={styles.logo}>Tadamon<Text style={styles.logoSpan}>Com</Text></Text>
           <View style={styles.navRight}>
-            <View style={styles.languageSelector}>
-              <TouchableOpacity><Text style={styles.langText}>العربية</Text></TouchableOpacity>
-              <TouchableOpacity><Text style={styles.langText}>EN</Text></TouchableOpacity>
-              <TouchableOpacity><Text style={styles.langText}>FR</Text></TouchableOpacity>
-            </View>
             <TouchableOpacity style={styles.navButton}>
               <Text style={styles.navButtonText}>Login / Register</Text>
             </TouchableOpacity>
@@ -216,10 +211,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 20,
-  },
-  languageSelector: {
-    flexDirection: 'row',
-    gap: 10,
   },
   navButton: {
     backgroundColor: '#2563eb',
