@@ -1,4 +1,20 @@
 import React, { useState } from 'react';
+
+const COLORS = {
+  // Primary Colors
+  powderBlue: '#B8D3E1',
+  limeYellow: '#D9E872',
+  
+  // Gradients
+  primaryGradient: ['#B8D3E1', '#D9E872'] as [string, string],
+  reverseGradient: ['#D9E872', '#B8D3E1'] as [string, string],
+  overlayGradient: ['rgba(184, 211, 225, 0.9)', 'rgba(217, 232, 114, 0.9)'] as [string, string],
+  
+  // UI Colors
+  background: '#FFFFFF',
+  text: '#2A4B5C',
+  cardBg: 'rgba(184, 211, 225, 0.1)',
+};
 import { 
   ScrollView, 
   View, 
@@ -67,7 +83,12 @@ const App = () => {
   return (
     <ScrollView style={styles.container}>
       {/* Navbar */}
-      <View style={styles.navbar}>
+      <LinearGradient
+        colors={COLORS.primaryGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.navbar}
+      >
         <View style={styles.navContainer}>
           <Text style={styles.logo}>Tadamon<Text style={styles.logoSpan}>Com</Text></Text>
           <View style={styles.navRight}>
@@ -76,7 +97,7 @@ const App = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </LinearGradient>
 
       {/* Hero Section */}
       <ImageBackground 
@@ -84,14 +105,23 @@ const App = () => {
         style={styles.hero}
       >
         <LinearGradient
-          colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0.7)']}
+          colors={COLORS.overlayGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
           style={styles.heroContent}
         >
           <Text style={styles.heroTitle}>Make Good Intentions Matter</Text>
           <Text style={styles.heroText}>Connecting communities, donors, and relief organizations</Text>
           <View style={styles.buttonGroup}>
             <TouchableOpacity style={styles.primaryButton}>
-              <Text style={styles.buttonText}>Register a Need</Text>
+              <LinearGradient
+                colors={COLORS.primaryGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
+              >
+                <Text style={styles.buttonText}>Register a Need</Text>
+              </LinearGradient>
             </TouchableOpacity>
             <TouchableOpacity style={styles.secondaryButton}>
               <Text style={styles.buttonTextSecondary}>Make a Donation</Text>
@@ -101,10 +131,14 @@ const App = () => {
       </ImageBackground>
 
       {/* How It Works Section */}
-      <View style={styles.section}>
+      <LinearGradient
+        colors={['#FFFFFF', 'rgba(184, 211, 225, 0.2)']}
+        style={styles.section}
+      >
         <Text style={styles.sectionTitle}>How TadamonCom Works</Text>
         <FlatList
           horizontal
+          showsHorizontalScrollIndicator={false}
           data={[1, 2, 3, 4]}
           renderItem={({ item }) => (
             <View style={styles.card}>
@@ -120,7 +154,7 @@ const App = () => {
           keyExtractor={(item) => item.toString()}
           contentContainerStyle={styles.cardContainer}
         />
-      </View>
+      </LinearGradient>
 
       {/* Community Dashboard */}
       <View style={styles.section}>
@@ -149,8 +183,9 @@ const App = () => {
         />
       </View>
 
+      {/* Impact Stories Section */}
       <LinearGradient 
-        colors={['#12372A', '#436850']} // Using the dark and medium green
+        colors={COLORS.reverseGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.testimonialSection}
@@ -158,6 +193,7 @@ const App = () => {
         <Text style={styles.sectionTitleWhite}>Impact Stories</Text>
         <FlatList
           horizontal
+          showsHorizontalScrollIndicator={false}
           data={testimonialData}
           renderItem={({ item }) => (
             <View style={styles.testimonialCard}>
@@ -170,7 +206,12 @@ const App = () => {
       </LinearGradient>
 
       {/* Footer */}
-      <View style={styles.footer}>
+      <LinearGradient
+        colors={COLORS.primaryGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.footer}
+      >
         <Text style={styles.footerLogo}>TadamonCom</Text>
         <View style={styles.footerColumns}>
           <View style={styles.footerColumn}>
@@ -180,7 +221,7 @@ const App = () => {
           {/* Add more columns */}
         </View>
         <Text style={styles.copyright}>© 2023 TadamonCom</Text>
-      </View>
+      </LinearGradient>
     </ScrollView>
   );
 };
@@ -188,10 +229,11 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FBFADA',
+    backgroundColor: COLORS.background,
   },
+  
+  // Navbar
   navbar: {
-    backgroundColor: '#ADBC9F',
     padding: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -199,18 +241,86 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  
+  // Text Styles
+  logo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: COLORS.text,
+    textShadowColor: 'rgba(42, 75, 92, 0.2)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  
+  // Buttons
+  primaryButton: {
+    height: 50,
+    borderRadius: 25,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  
+  buttonText: {
+    color: COLORS.text,
+    fontWeight: '600',
+  },
+  
+  // Cards
+  card: {
+    width: width * 0.8,
+    backgroundColor: COLORS.cardBg,
+    borderRadius: 16,
+    overflow: 'hidden',
+    margin: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: COLORS.powderBlue,
+  },
+  
+  // Section Headers
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: COLORS.text,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  
+  // Testimonials
+  testimonialSection: {
+    padding: 24,
+    margin: 16,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  
+  testimonialCard: {
+    width: width * 0.8,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 12,
+    padding: 20,
+    margin: 8,
+    borderWidth: 1,
+    borderColor: COLORS.powderBlue,
+  },
+  
+  // Footer
+  footer: {
+    overflow: 'hidden',
+    padding: 24,
+  },
   navContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  logo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#12372A', // Darkest green from palette
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
   },
   logoSpan: {
     color: '#436850', // Second darkest green
@@ -221,14 +331,14 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   navButton: {
-    backgroundColor: '#12372A',
+    backgroundColor: COLORS.powderBlue,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 4,
+    borderRadius: 8,
   },
   navButtonText: {
-    color: '#FBFADA',
-    fontWeight: '500',
+    color: COLORS.text,
+    fontWeight: '600',
   },
   hero: {
     height: 400,
@@ -241,13 +351,13 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     fontSize: 32,
-    color: '#FBFADA',
+    color: COLORS.text,
     textAlign: 'center',
     marginBottom: 16,
   },
   heroText: {
     fontSize: 18,
-    color: '#FBFADA',
+    color: COLORS.text,
     textAlign: 'center',
     marginBottom: 32,
   },
@@ -256,60 +366,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 16,
   },
-  primaryButton: {
-    backgroundColor: '#12372A',
-    padding: 16,
-    borderRadius: 4,
-  },
   secondaryButton: {
-    backgroundColor: '#FBFADA',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     padding: 16,
-    borderRadius: 4,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#12372A',
-  },
-  buttonText: {
-    color: '#FBFADA',
-    fontWeight: '500',
+    borderColor: COLORS.powderBlue,
   },
   buttonTextSecondary: {
-    color: '#12372A',
+    color: COLORS.text,
     fontWeight: '500',
   },
-  card: {
-    width: width * 0.8,
-    backgroundColor: '#FBFADA',
-    borderRadius: 8,
-    margin: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: '#ADBC9F',
-  },
   needItem: {
-    backgroundColor: '#FBFADA',
+    backgroundColor: COLORS.cardBg,
     borderRadius: 8,
     padding: 16,
     margin: 8,
     borderLeftWidth: 4,
-    borderLeftColor: '#ADBC9F',
+    borderLeftColor: COLORS.powderBlue,
   },
   priorityHigh: {
-    borderLeftColor: '#12372A',
+    backgroundColor: COLORS.powderBlue,
   },
   section: {
     padding: 24,
     backgroundColor: '#FBFADA',
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#12372A',
-    textAlign: 'center',
-    marginBottom: 16,
   },
   sectionTitleWhite: {
     fontSize: 28,
@@ -363,14 +444,15 @@ const styles = StyleSheet.create({
   tab: {
     paddingHorizontal: 12,
     paddingVertical: 8,
-    borderRadius: 4,
-    backgroundColor: '#ADBC9F',
+    borderRadius: 8,
+    backgroundColor: 'rgba(184, 211, 225, 0.2)',
   },
   activeTab: {
-    backgroundColor: '#12372A',
+    backgroundColor: COLORS.powderBlue,
   },
   activeTabText: {
-    color: '#FBFADA',
+    color: COLORS.text,
+    fontWeight: '600',
   },
   needList: {
     paddingBottom: 16,
@@ -392,10 +474,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   priorityMedium: {
-    backgroundColor: '#436850',
+    backgroundColor: COLORS.limeYellow,
   },
   priorityLow: {
-    backgroundColor: '#ADBC9F',
+    backgroundColor: 'rgba(184, 211, 225, 0.5)',
   },
   priorityText: {
     color: '#FBFADA',
@@ -411,50 +493,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 8,
   },
-  testimonialSection: {
-    padding: 24,
-    margin: 16,
-    borderRadius: 20,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.15,
-    shadowRadius: 16,
-    elevation: 6,
-  },
   testimonialContainer: {
     paddingVertical: 16,
   },
-  testimonialCard: {
-    width: width * 0.8,
-    backgroundColor: 'rgba(251, 250, 218, 0.1)', // Using FBFADA with opacity
-    borderRadius: 12,
-    padding: 20,
-    margin: 8,
-    borderWidth: 1,
-    borderColor: '#ADBC9F', // Light sage green for border
-    backdropFilter: 'blur(10px)',
-  },
   testimonialText: {
-    color: '#FBFADA', // Cream color for text
+    color: COLORS.text,
     fontStyle: 'italic',
     fontSize: 16,
     lineHeight: 24,
-    marginBottom: 12,
   },
   testimonialAuthor: {
-    color: '#ADBC9F', // Light sage green for author
+    color: COLORS.powderBlue,
     fontWeight: 'bold',
     fontSize: 14,
-  },
-  footer: {
-    backgroundColor: '#12372A',
-    padding: 24,
   },
   footerLogo: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FBFADA',
+    color: COLORS.text,
     marginBottom: 16,
   },
   footerColumns: {
@@ -474,7 +530,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   footerLink: {
-    color: '#ADBC9F',
+    color: COLORS.text,
     marginBottom: 8,
   },
   copyright: {

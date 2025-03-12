@@ -24,3 +24,19 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 };
+
+export const COLORS = {
+  // Base Colors
+  powderBlue: '#B8D3E1',
+  limeYellow: '#D9E872',
+  
+  // Gradient Combinations
+  primaryGradient: ['#B8D3E1', '#D9E872'],
+  reverseGradient: ['#D9E872', '#B8D3E1'],
+  
+  // UI Colors
+  background: '#FFFFFF',
+  text: '#2A4B5C',
+  textLight: '#5A7B8C',
+  cardBg: 'rgba(184, 211, 225, 0.1)',
+};
