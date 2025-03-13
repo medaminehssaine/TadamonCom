@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'react-native';
+import { validateEmail, validatePassword, encodeBase64 } from '../../utils/validation';
 
 const COLORS = {
   powderBlue: '#B8D3E1',
@@ -16,6 +17,81 @@ const COLORS = {
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleEmailChange = (text: string) => {
+    setEmail(text.toLowerCase().trim());
+    setError('');
+  };
+
+  const handlePasswordChange = (text: string) => {
+    setPassword(text);
+    setError('');
+  };
+
+  const handleLogin = async () => {
+    try {
+      setError('');
+      setIsLoading(true);
+
+      // Validate inputs
+      const emailError = validateEmail(email);
+      if (emailError) {
+        setError(emailError);
+        return;
+      }
+
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        setError(passwordError);
+        return;
+      }
+
+      // Encode credentials
+      const encodedEmail = encodeBase64(email);
+      const encodedPassword = encodeBase64(password);
+
+      const response = await fetch('YOUR_API_ENDPOINT/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: encodedEmail,
+          password: encodedPassword,
+        }),
+      });
+
+      // Check if response is JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Server returned invalid response. Please try again later.");
+      }
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error('JSON Parse Error:', parseError);
+        throw new Error("Failed to parse server response. Please try again.");
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      console.log('Login successful:', data);
+
+    } catch (err: any) {
+      const errorMessage = err.message || 'Something went wrong';
+      setError(errorMessage);
+      Alert.alert('Error', errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -33,13 +109,17 @@ export default function LoginScreen() {
       <Text style={styles.subtitle}>Login to your account</Text>
 
       <View style={styles.formContainer}>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        
         <TextInput
           style={styles.input}
           placeholder="Email"
           placeholderTextColor={COLORS.text}
           keyboardType="email-address"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={handleEmailChange}
+          maxLength={50}
+          autoCapitalize="none"
         />
 
         <TextInput
@@ -48,14 +128,15 @@ export default function LoginScreen() {
           placeholderTextColor={COLORS.text}
           secureTextEntry
           value={password}
-          onChangeText={setPassword}
+          onChangeText={handlePasswordChange}
+          maxLength={20}
         />
 
         <TouchableOpacity style={styles.forgotPassword}>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.primaryButton}>
+        <TouchableOpacity style={styles.primaryButton} onPress={handleLogin}>
           <LinearGradient
             colors={COLORS.primaryGradient}
             start={{ x: 0, y: 0 }}
@@ -178,5 +259,10 @@ const styles = StyleSheet.create({
     color: COLORS.logoText,
     fontSize: 16,
     fontWeight: '600',
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+    textAlign: 'center',
   },
 });
