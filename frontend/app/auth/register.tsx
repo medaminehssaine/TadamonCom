@@ -16,7 +16,7 @@ const COLORS = {
 };
 
 const USER_TYPES = [
-  { id: '', label: 'Select User Type' },
+ 
   { id: 'user', label: 'Regular User' },
   { id: 'affected', label: 'Affected Individual' }
 ];
