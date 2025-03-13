@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'react-native';
-import { validateEmail, validatePassword, encodeBase64, hashData, ENDPOINT } from '../../utils/validation';
+import { validateEmail, validatePassword, encodeBase64, hashData, ENDPOINT } from '@/utils/validation';
 import { Picker } from '@react-native-picker/picker';
 
 const COLORS = {
@@ -59,7 +59,7 @@ export default function RegisterScreen() {
 
       // Encode and hash credentials
       const encodedEmail = encodeBase64(email.toLowerCase().trim());
-      const hashedPassword = hashData(encodeBase64(password));
+      const hashedPassword = encodeBase64(hashData(password));
 
       const response = await fetch(ENDPOINT + '/register', {
         method: 'POST',
