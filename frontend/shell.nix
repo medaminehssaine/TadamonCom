@@ -16,6 +16,8 @@ pkgs.mkShell {
     # Other dependencies (JDK, Node.js, etc.)
     pkgs.jdk
     pkgs.nodejs
+    pkgs.python312Packages.requests
+
   ];
 
   ANDROID_HOME = "${androidSdk.androidsdk}/libexec/android-sdk";
