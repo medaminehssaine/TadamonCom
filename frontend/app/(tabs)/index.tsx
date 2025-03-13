@@ -14,6 +14,9 @@ const COLORS = {
   background: '#FFFFFF',
   text: '#2A4B5C',
   cardBg: 'rgba(184, 211, 225, 0.1)',
+  sectionBg: 'rgba(184, 211, 225, 0.05)', // Changed from cream
+  overlayBg: 'rgba(184, 211, 225, 0.2)',
+  mainBg: 'rgba(184, 211, 225, 0.05)', // Add this new color for main background
 };
 import { 
   ScrollView, 
@@ -123,18 +126,22 @@ const App = () => {
                 <Text style={styles.buttonText}>Register a Need</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.secondaryButton}>
-              <Text style={styles.buttonTextSecondary}>Make a Donation</Text>
+            <TouchableOpacity style={styles.primaryButton}>
+              <LinearGradient
+                colors={COLORS.reverseGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
+              >
+                <Text style={styles.buttonText}>Make a Donation</Text>
+              </LinearGradient>
             </TouchableOpacity>
           </View>
         </LinearGradient>
       </ImageBackground>
 
       {/* How It Works Section */}
-      <LinearGradient
-        colors={['#FFFFFF', 'rgba(184, 211, 225, 0.2)']}
-        style={styles.section}
-      >
+      <View style={styles.section}>
         <Text style={styles.sectionTitle}>How TadamonCom Works</Text>
         <FlatList
           horizontal
@@ -154,7 +161,7 @@ const App = () => {
           keyExtractor={(item) => item.toString()}
           contentContainerStyle={styles.cardContainer}
         />
-      </LinearGradient>
+      </View>
 
       {/* Community Dashboard */}
       <View style={styles.section}>
@@ -184,13 +191,8 @@ const App = () => {
       </View>
 
       {/* Impact Stories Section */}
-      <LinearGradient 
-        colors={COLORS.reverseGradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.testimonialSection}
-      >
-        <Text style={styles.sectionTitleWhite}>Impact Stories</Text>
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: COLORS.text }]}>Impact Stories</Text>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -203,7 +205,7 @@ const App = () => {
           )}
           contentContainerStyle={styles.testimonialContainer}
         />
-      </LinearGradient>
+      </View>
 
       {/* Footer */}
       <LinearGradient
@@ -220,7 +222,7 @@ const App = () => {
           </View>
           {/* Add more columns */}
         </View>
-        <Text style={styles.copyright}>© 2023 TadamonCom</Text>
+        <Text style={styles.copyright}>© {new Date().getFullYear()} TadamonCom</Text>
       </LinearGradient>
     </ScrollView>
   );
@@ -229,7 +231,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.mainBg, // Change from white to match section background
   },
   
   // Navbar
@@ -297,25 +299,31 @@ const styles = StyleSheet.create({
   // Testimonials
   testimonialSection: {
     padding: 24,
-    margin: 16,
-    borderRadius: 20,
-    overflow: 'hidden',
+    backgroundColor: COLORS.sectionBg,
+    marginVertical: 0, // Remove vertical margin
+    borderRadius: 0, // Remove border radius
   },
   
   testimonialCard: {
     width: width * 0.8,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: COLORS.overlayBg,
     borderRadius: 12,
     padding: 20,
     margin: 8,
     borderWidth: 1,
     borderColor: COLORS.powderBlue,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 3,
   },
   
   // Footer
   footer: {
     overflow: 'hidden',
     padding: 24,
+    marginTop: 0, // Remove top margin
   },
   navContainer: {
     flexDirection: 'row',
@@ -390,12 +398,15 @@ const styles = StyleSheet.create({
   },
   section: {
     padding: 24,
-    backgroundColor: '#FBFADA',
+    backgroundColor: COLORS.sectionBg,
+    marginVertical: 0, // Remove vertical margin
+    borderTopWidth: 1, // Add subtle separator if needed
+    borderTopColor: 'rgba(184, 211, 225, 0.1)',
   },
   sectionTitleWhite: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#FBFADA', // Cream color for title
+    color: COLORS.text, // Changed from cream
     textAlign: 'center',
     marginBottom: 24,
     textShadowColor: 'rgba(0, 0, 0, 0.1)',
@@ -480,7 +491,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(184, 211, 225, 0.5)',
   },
   priorityText: {
-    color: '#FBFADA',
+    color: COLORS.text, // Changed from cream
     fontSize: 12,
     fontWeight: '500',
   },
@@ -524,7 +535,7 @@ const styles = StyleSheet.create({
     minWidth: 150,
   },
   footerHeading: {
-    color: '#FBFADA',
+    color: COLORS.text, // Changed from cream
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 12,
