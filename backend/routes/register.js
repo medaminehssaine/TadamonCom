@@ -5,10 +5,11 @@ const bcrypt = require('bcryptjs');
 const { Buffer } = require('buffer');
 const router = express.Router();
 const { hashData, decodeBase64 } = require("../controllers/utils")
-const { User } = require("../controllers/userController")
+const User = require('../models/User');
 
 router.post("/auth/register",  async (req, res) => {
     try {
+        console.log("Request Body:", req.body);
         const { email: encodedEmail, password: hashedPassword } = req.body;
 
         console.log(encodedEmail, hashedPassword)
