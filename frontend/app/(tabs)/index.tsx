@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 const COLORS = {
   // Primary Colors
   powderBlue: '#B8D3E1',
@@ -104,71 +105,79 @@ const App = () => {
 
       {/* Hero Section */}
       <ImageBackground 
-        source={{ uri: 'https://placekitten.com/1200/600' }} 
-        style={styles.hero}
-      >
+  source={require('../../assets/images/bg-img.jpg')} 
+  style={styles.hero}
+  resizeMode="cover"
+>
+  <View style={styles.heroContent}>
+    <Text style={styles.heroTitle}>Make Good Intentions Matter</Text>
+    <Text style={styles.heroText}>Connecting communities, donors, and relief organizations</Text>
+    <View style={styles.buttonGroup}>
+      <TouchableOpacity style={styles.primaryButton}>
         <LinearGradient
-          colors={COLORS.overlayGradient}
+          colors={COLORS.primaryGradient}
           start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.heroContent}
+          end={{ x: 1, y: 0 }}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
         >
-          <Text style={styles.heroTitle}>Make Good Intentions Matter</Text>
-          <Text style={styles.heroText}>Connecting communities, donors, and relief organizations</Text>
-          <View style={styles.buttonGroup}>
-            <TouchableOpacity style={styles.primaryButton}>
-              <LinearGradient
-                colors={COLORS.primaryGradient}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
-              >
-                <Text style={styles.buttonText}>Register a Need</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton}>
-              <LinearGradient
-                colors={COLORS.reverseGradient}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
-              >
-                <Text style={styles.buttonText}>Make a Donation</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.buttonText}>Register a Need</Text>
         </LinearGradient>
-      </ImageBackground>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.primaryButton}>
+        <LinearGradient
+          colors={COLORS.reverseGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
+        >
+          <Text style={styles.buttonText}>Make a Donation</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    </View>
+  </View>
+</ImageBackground>
 
       {/* How It Works Section */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>How TadamonCom Works</Text>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={[1, 2, 3, 4]}
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              <View style={styles.cardIcon}>
-                <Text style={styles.cardIconText}>{item}</Text>
-              </View>
-              <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>Step {item}</Text>
-                <Text>Description of step</Text>
-              </View>
-            </View>
-          )}
-          keyExtractor={(item) => item.toString()}
-          contentContainerStyle={styles.cardContainer}
-        />
+  <Text style={styles.sectionTitle}>How TadamonCom Works</Text>
+  <FlatList
+    horizontal
+    showsHorizontalScrollIndicator={false}
+    data={[
+      { id: '1', title: 'Register', description: 'Create your account' },
+      { id: '2', title: 'Connect', description: 'Find needs and donors' },
+      { id: '3', title: 'Coordinate', description: 'Manage aid delivery' },
+      { id: '4', title: 'Track', description: 'Monitor progress' }
+    ]}
+    renderItem={({ item }) => (
+      <View style={styles.card}>
+        <View style={[styles.cardIcon, { backgroundColor: COLORS.powderBlue }]}>
+          <Text style={styles.cardIconText}>{item.id}</Text>
+        </View>
+        <View style={styles.cardContent}>
+          <Text style={styles.cardTitle}>{item.title}</Text>
+          <Text style={styles.cardDescription}>{item.description}</Text>
+        </View>
       </View>
+    )}
+    keyExtractor={item => item.id}
+    contentContainerStyle={styles.cardContainer}
+  />
+</View>
 
       {/* Community Dashboard */}
       <View style={styles.section}>
         <View style={styles.dashboardHeader}>
           <Text style={styles.dashboardTitle}>Community Dashboard</Text>
-          <TouchableOpacity style={styles.secondaryButton}>
-            <Text>+ Register New Need</Text>
+          <TouchableOpacity style={styles.primaryButton}>
+            <LinearGradient
+              colors={COLORS.primaryGradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
+            >
+              <Text style={styles.buttonText}>+ Register New Need</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
         <View style={styles.tabContainer}>
@@ -234,6 +243,21 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.mainBg, // Change from white to match section background
   },
   
+  // Background
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  // Overlay
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   // Navbar
   navbar: {
     padding: 16,
@@ -273,8 +297,8 @@ const styles = StyleSheet.create({
   
   // Cards
   card: {
-    width: width * 0.8,
-    backgroundColor: COLORS.cardBg,
+    width: width * 0.7,
+    backgroundColor: '#FFFFFF',
     borderRadius: 16,
     overflow: 'hidden',
     margin: 8,
@@ -349,25 +373,47 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   hero: {
-    height: 400,
-    backgroundColor: '#436850', // Second darkest green
+    height: 600, // Increased height for better image display
+    width: '100%',
   },
   heroContent: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Lighter overlay for better image visibility
   },
   heroTitle: {
+    fontSize: 48, // Larger text
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 16,
+    color: '#FFFFFF',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  title: {
     fontSize: 32,
+    fontWeight: 'bold',
+    color: COLORS.text,
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  subtitle: {
+    fontSize: 18,
     color: COLORS.text,
     textAlign: 'center',
     marginBottom: 16,
   },
   heroText: {
-    fontSize: 18,
-    color: COLORS.text,
+    fontSize: 20,
     textAlign: 'center',
     marginBottom: 32,
+    color: '#FFFFFF',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
   buttonGroup: {
     flexDirection: 'row',
@@ -399,8 +445,8 @@ const styles = StyleSheet.create({
   section: {
     padding: 24,
     backgroundColor: COLORS.sectionBg,
-    marginVertical: 0, // Remove vertical margin
-    borderTopWidth: 1, // Add subtle separator if needed
+    marginVertical: 0,
+    borderTopWidth: 1,
     borderTopColor: 'rgba(184, 211, 225, 0.1)',
   },
   sectionTitleWhite: {
@@ -417,24 +463,30 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   cardIcon: {
-    backgroundColor: '#ADBC9F',
-    padding: 16,
+    padding: 24,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: COLORS.powderBlue,
   },
   cardIconText: {
-    color: '#12372A',
+    color: COLORS.text,
     fontSize: 24,
     fontWeight: 'bold',
   },
   cardContent: {
     padding: 16,
+    backgroundColor: 'rgba(184, 211, 225, 0.05)',
+  },
+  cardDescription: {
+    fontSize: 14,
+    color: COLORS.text,
+    opacity: 0.8,
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 8,
-    color: '#12372A',
+    color: COLORS.text,
   },
   dashboardHeader: {
     flexDirection: 'row',
