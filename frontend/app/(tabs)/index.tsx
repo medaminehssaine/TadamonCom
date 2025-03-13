@@ -73,22 +73,22 @@ const App = () => {
   ];
 
   const testimonialData = [
-    { id: '1', text: "TadamonCom helped us...", author: "- Community Leader" },
-    { id: '2', text: "We received timely help...", author: "- Local Resident" },
-    { id: '3', text: "A great platform for...", author: "- Volunteer" },
-    { id: '4', text: "Efficient and reliable...", author: "- NGO Partner" },
-    { id: '5', text: "The platform is user-friendly...", author: "- Relief Worker" },
-    { id: '6', text: "We managed to coordinate...", author: "- Community Organizer" },
-    { id: '7', text: "A lifesaver in times of...", author: "- Disaster Response Team" },
-    { id: '8', text: "Highly recommend TadamonCom...", author: "- Donor" },
-    { id: '9', text: "The best platform for...", author: "- Volunteer Coordinator" },
-    { id: '10', text: "We were able to reach...", author: "- NGO Representative" },
-    { id: '11', text: "A seamless experience...", author: "- Aid Recipient" },
-    { id: '12', text: "TadamonCom is a game-changer...", author: "- Community Member" },
-    { id: '13', text: "The support we received...", author: "- Local Authority" },
-    { id: '14', text: "An essential tool for...", author: "- Emergency Services" },
-    { id: '15', text: "We couldn't have done it...", author: "- Partner Organization" },
-    { id: '16', text: "A reliable and efficient...", author: "- Relief Coordinator" }
+    { id: '1', title: 'Testimonial 1', description: 'Description 1', text: "TadamonCom helped us...", author: "- Community Leader" },
+    { id: '2', title: 'Testimonial 2', description: 'Description 2', text: "We received timely help...", author: "- Local Resident" },
+    { id: '3', title: 'Testimonial 3', description: 'Description 3', text: "A great platform for...", author: "- Volunteer" },
+    { id: '4', title: 'Testimonial 4', description: 'Description 4', text: "Efficient and reliable...", author: "- NGO Partner" },
+    { id: '5', title: 'Testimonial 5', description: 'Description 5', text: "The platform is user-friendly...", author: "- Relief Worker" },
+    { id: '6', title: 'Testimonial 6', description: 'Description 6', text: "We managed to coordinate...", author: "- Community Organizer" },
+    { id: '7', title: 'Testimonial 7', description: 'Description 7', text: "A lifesaver in times of...", author: "- Disaster Response Team" },
+    { id: '8', title: 'Testimonial 8', description: 'Description 8', text: "Highly recommend TadamonCom...", author: "- Donor" },
+    { id: '9', title: 'Testimonial 9', description: 'Description 9', text: "The best platform for...", author: "- Volunteer Coordinator" },
+    { id: '10', title: 'Testimonial 10', description: 'Description 10', text: "We were able to reach...", author: "- NGO Representative" },
+    { id: '11', title: 'Testimonial 11', description: 'Description 11', text: "A seamless experience...", author: "- Aid Recipient" },
+    { id: '12', title: 'Testimonial 12', description: 'Description 12', text: "TadamonCom is a game-changer...", author: "- Community Member" },
+    { id: '13', title: 'Testimonial 13', description: 'Description 13', text: "The support we received...", author: "- Local Authority" },
+    { id: '14', title: 'Testimonial 14', description: 'Description 14', text: "An essential tool for...", author: "- Emergency Services" },
+    { id: '15', title: 'Testimonial 15', description: 'Description 15', text: "We couldn't have done it...", author: "- Partner Organization" },
+    { id: '16', title: 'Testimonial 16', description: 'Description 16', text: "A reliable and efficient...", author: "- Relief Coordinator" }
   ];
 
   const renderNeedItem = ({ item }: { item: { id: string; title: string; priority: string; status: string; eta?: string } }) => (
@@ -389,7 +389,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '50',
     paddingRight: "3%",
     paddingLeft: "3%",
     height: 80,

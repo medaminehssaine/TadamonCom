@@ -41,10 +41,10 @@ export default function HomePage() {
         <Text style={styles.subtitle}>Connecting Communities Through Aid</Text>
 
         <View style={styles.formContainer}>
-          {/* Horizontal Feature Cards */}
+          {/* Vertical Feature Cards */}
           <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
+            horizontal={false} // Change to vertical scrolling
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.featureCards}
           >
             <View style={styles.featureCard}>
@@ -173,12 +173,11 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   featureCards: {
-    flexDirection: 'row',
-    paddingHorizontal: 24,
+    width: '100%',
     gap: 16,
   },
   featureCard: {
-    width: 280, // Fixed width for cards
+    width: '100%', // Changed from fixed width to 100%
     backgroundColor: COLORS.cardBg,
     borderRadius: 8,
     padding: 20,
