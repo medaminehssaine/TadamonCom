@@ -18,6 +18,27 @@ const COLORS = {
   sectionBg: 'rgba(184, 211, 225, 0.05)', // Changed from cream
   overlayBg: 'rgba(184, 211, 225, 0.2)',
   mainBg: 'rgba(184, 211, 225, 0.05)', // Add this new color for main background
+  navbar: {
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+    paddingBottom: 16,
+    marginBottom: 0, // Remove bottom margin
+  },
+  hero: {
+    width: '100%',
+    marginTop: 0, // Remove top margin
+    aspectRatio: 16 / 9, // This will maintain the image's natural aspect ratio
+  },
+  buttonGradient: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
 };
 import { 
   ScrollView, 
@@ -95,17 +116,15 @@ const App = () => {
       >
         <View style={styles.navContainer}>
           <Text style={styles.logo}>Tadamon<Text style={styles.logoSpan}>Com</Text></Text>
-          <View style={styles.navRight}>
-            <TouchableOpacity style={styles.navButton}>
-              <Text style={styles.navButtonText}>Login / Register</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={styles.navButton}>
+            <Text style={styles.navButtonText}>Login / Register</Text>
+          </TouchableOpacity>
         </View>
       </LinearGradient>
 
       {/* Hero Section */}
       <ImageBackground 
-  source={require('../../assets/images/bg-img.jpg')} 
+  source={require('../../assets/images/heroimage.jpg')} 
   style={styles.hero}
   resizeMode="cover"
 >
@@ -118,7 +137,7 @@ const App = () => {
           colors={COLORS.primaryGradient}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
+          style={styles.buttonGradient}
         >
           <Text style={styles.buttonText}>Register a Need</Text>
         </LinearGradient>
@@ -128,7 +147,7 @@ const App = () => {
           colors={COLORS.reverseGradient}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}
+          style={styles.buttonGradient}
         >
           <Text style={styles.buttonText}>Make a Donation</Text>
         </LinearGradient>
@@ -266,6 +285,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5,
+    paddingBottom: 16,
+    marginBottom: 0,
   },
   
   // Text Styles
@@ -375,6 +396,8 @@ const styles = StyleSheet.create({
   hero: {
     height: 600, // Increased height for better image display
     width: '100%',
+    marginTop: 0,
+    aspectRatio: 16 / 9, // This will maintain the image's natural aspect ratio
   },
   heroContent: {
     flex: 1,
@@ -606,6 +629,12 @@ const styles = StyleSheet.create({
   langText: {
     color: '#12372A',
     fontSize: 14,
+  },
+  buttonGradient: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
   },
 });
 
