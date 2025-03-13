@@ -4,12 +4,12 @@ const COLORS = {
   // Primary Colors
   powderBlue: '#B8D3E1',
   limeYellow: '#D9E872',
-  
+
   // Gradients
   primaryGradient: ['#B8D3E1', '#D9E872'] as [string, string],
   reverseGradient: ['#D9E872', '#B8D3E1'] as [string, string],
   overlayGradient: ['rgba(184, 211, 225, 0.9)', 'rgba(217, 232, 114, 0.9)'] as [string, string],
-  
+
   // UI Colors
   background: '#FFFFFF',
   text: '#2A4B5C',
@@ -40,17 +40,17 @@ const COLORS = {
   },
   logoText: '#1B4242', // Deeper teal for main text
   logoSpanText: '#5C8374', // Muted sage green for 'Com'
-  priorityHighBg: 'rgb(231, 229, 232)', // Add new priority high color
+  priorityHighBg: 'rgb(228, 118, 118)', // Add new priority high color
   footerText: '#12372A', // Darker color for better visibility
   copyrightText: '#2A4B5C', // Darker color for copyright text
 };
-import { 
-  ScrollView, 
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity, 
-  ImageBackground, 
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
   FlatList,
   Dimensions,
   Image // Add Image here if not already imported
@@ -95,10 +95,10 @@ const App = () => {
     <View style={styles.needItem}>
       <View style={styles.needHeader}>
         <Text style={styles.needTitle}>{item.title}</Text>
-        <View style={[styles.priorityBadge, 
-          item.priority === 'High' ? styles.priorityHigh :
-          item.priority === 'Medium' ? styles.priorityMedium : 
-          styles.priorityLow]}>
+        <View style={[styles.priorityBadge,
+        item.priority === 'High' ? styles.priorityHigh :
+          item.priority === 'Medium' ? styles.priorityMedium :
+            styles.priorityLow]}>
           <Text style={styles.priorityText}>{item.priority} Priority</Text>
         </View>
       </View>
@@ -112,89 +112,89 @@ const App = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Navbar */}
-      <LinearGradient
-        colors={COLORS.primaryGradient}
-        start={{ x: 0, y: 0 }}
-        style={styles.navbar}
+
+      {/* Hero Section */}
+      <ImageBackground
+        source={require('@/assets/images/heroimage.jpg')}
+        style={styles.hero}
+        resizeMode="cover"
       >
-        <View style={styles.navContainer}>
-          <View style={styles.logoContainer}>
-            <Image 
-              source={require('../../assets/images/TadamonLogo.png')}
-              style={styles.logoImage}
-            />
-            <Text style={styles.logo}>
-              Tadamon<Text style={styles.logoSpan}>Com</Text>
-            </Text>
-          </View>
+        <LinearGradient
+          colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0)']} // Transparent gradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={{ flex: 1 }} // Ensure the gradient itself is transparent
+        >
+          <View style={styles.navContainer}>
+            <View style={styles.logoContainer}>
+              <Image
+                source={require('@/assets/images/TadamonLogo.png')}
+                style={styles.logoImage}
+              />
+              <Text style={styles.logo}>
+                Tadamon<Text style={styles.logoSpan}>Com</Text>
+              </Text>
+            </View>
           <TouchableOpacity style={styles.navButton}>
             <Text style={styles.navButtonText}>Login / Register</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
-
-      {/* Hero Section */}
-      <ImageBackground 
-  source={require('../../assets/images/heroimage.jpg')} 
-  style={styles.hero}
-  resizeMode="cover"
->
-  <View style={styles.heroContent}>
-    <Text style={styles.heroTitle}>Make Good Intentions Matter</Text>
-    <Text style={styles.heroText}>Connecting communities, donors, and relief organizations</Text>
-    <View style={styles.buttonGroup}>
-      <TouchableOpacity style={styles.primaryButton}>
-        <LinearGradient
-          colors={COLORS.primaryGradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.buttonGradient}
-        >
-          <Text style={styles.buttonText}>Register a Need</Text>
-        </LinearGradient>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.primaryButton}>
-        <LinearGradient
-          colors={COLORS.reverseGradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.buttonGradient}
-        >
-          <Text style={styles.buttonText}>Make a Donation</Text>
-        </LinearGradient>
-      </TouchableOpacity>
-    </View>
-  </View>
-</ImageBackground>
+        <View style={styles.heroContent}>
+          <Text style={styles.heroTitle}>Make Good Intentions Matter</Text>
+          <Text style={styles.heroText}>Connecting communities, donors, and relief organizations</Text>
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity style={styles.primaryButton}>
+              <LinearGradient
+                colors={COLORS.primaryGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.buttonGradient}
+              >
+                <Text style={styles.buttonText}>Register a Need</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.primaryButton}>
+              <LinearGradient
+                colors={COLORS.reverseGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.buttonGradient}
+              >
+                <Text style={styles.buttonText}>Make a Donation</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
 
       {/* How It Works Section */}
       <View style={styles.section}>
-  <Text style={styles.sectionTitle}>How TadamonCom Works</Text>
-  <FlatList
-    horizontal
-    showsHorizontalScrollIndicator={false}
-    data={[
-      { id: '1', title: 'Register', description: 'Create your account' },
-      { id: '2', title: 'Connect', description: 'Find needs and donors' },
-      { id: '3', title: 'Coordinate', description: 'Manage aid delivery' },
-      { id: '4', title: 'Track', description: 'Monitor progress' }
-    ]}
-    renderItem={({ item }) => (
-      <View style={styles.card}>
-        <View style={[styles.cardIcon, { backgroundColor: COLORS.powderBlue }]}>
-          <Text style={styles.cardIconText}>{item.id}</Text>
-        </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>{item.title}</Text>
-          <Text style={styles.cardDescription}>{item.description}</Text>
-        </View>
+        <Text style={styles.sectionTitle}>How TadamonCom Works</Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={[
+            { id: '1', title: 'Register', description: 'Create your account' },
+            { id: '2', title: 'Connect', description: 'Find needs and donors' },
+            { id: '3', title: 'Coordinate', description: 'Manage aid delivery' },
+            { id: '4', title: 'Track', description: 'Monitor progress' }
+          ]}
+          renderItem={({ item }: { item: { id: string; title: string; description: string } }) => (
+            <View style={styles.card}>
+              <View style={[styles.cardIcon, { backgroundColor: COLORS.powderBlue }]}>
+                <Text style={styles.cardIconText}>{item.id}</Text>
+              </View>
+              <View style={styles.cardContent}>
+                <Text style={styles.cardTitle}>{item.title}</Text>
+                <Text style={styles.cardDescription}>{item.description}</Text>
+              </View>
+            </View>
+          )}
+          keyExtractor={(item: { id: string }) => item.id}
+          contentContainerStyle={styles.cardContainer}
+        />
       </View>
-    )}
-    keyExtractor={item => item.id}
-    contentContainerStyle={styles.cardContainer}
-  />
-</View>
 
       {/* Community Dashboard */}
       <View style={styles.section}>
@@ -225,7 +225,7 @@ const App = () => {
         <FlatList
           data={needsData}
           renderItem={renderNeedItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item: { id: string }) => item.id}
           contentContainerStyle={styles.needList}
         />
       </View>
@@ -237,7 +237,7 @@ const App = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={testimonialData}
-          renderItem={({ item }) => (
+          renderItem={({ item }: { item: { id: string; title: string; description: string, text: string, author: string } }) => (
             <View style={styles.testimonialCard}>
               <Text style={styles.testimonialText}>"{item.text}"</Text>
               <Text style={styles.testimonialAuthor}>{item.author}</Text>
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.mainBg, // Change from white to match section background
   },
-  
+
   // Background
   background: {
     flex: 1,
@@ -302,18 +302,18 @@ const styles = StyleSheet.create({
     height: 80, // Add fixed height to ensure consistent navbar size
     justifyContent: 'center', // Center content vertically
   },
-  
+
   // Text Styles
   logo: {
-    fontSize: 30, // Slightly larger for better visibility
+    fontSize: 20, // Slightly larger for better visibility
     fontWeight: 'bold',
     color: COLORS.logoText, // Dark teal color
     textShadowColor: 'rgba(27, 66, 66, 0.15)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
-  
-  
+
+
   // Buttons
   primaryButton: {
     height: 50,
@@ -325,12 +325,12 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
   },
-  
+
   buttonText: {
     color: COLORS.text,
     fontWeight: '600',
   },
-  
+
   // Cards
   card: {
     width: width * 0.7,
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.powderBlue,
   },
-  
+
   // Section Headers
   sectionTitle: {
     fontSize: 24,
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 16,
   },
-  
+
   // Testimonials
   testimonialSection: {
     padding: 24,
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     marginVertical: 0, // Remove vertical margin
     borderRadius: 0, // Remove border radius
   },
-  
+
   testimonialCard: {
     width: width * 0.8,
     backgroundColor: COLORS.overlayBg,
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 3,
   },
-  
+
   // Footer
   footer: {
     overflow: 'hidden',
@@ -389,6 +389,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    height: '50',
+    paddingRight: "3%",
+    paddingLeft: "3%",
+    height: 80,
+    paddingTop: 40,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
   },
   logoSpan: {
     color: '#436850', // Second darkest green
@@ -412,7 +418,7 @@ const styles = StyleSheet.create({
     height: 600, // Increased height for better image display
     width: '100%',
     marginTop: 0,
-    aspectRatio: 16 / 9, // This will maintain the image's natural aspect ratio
+    // aspectRatio: 16 / 9, // This will maintain the image's natural aspect ratio
   },
   heroContent: {
     flex: 1,
@@ -420,6 +426,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: 'rgba(0, 0, 0, 0.3)', // Lighter overlay for better image visibility
+    marginTop: -400
   },
   heroTitle: {
     fontSize: 48, // Larger text
