@@ -7,7 +7,7 @@ import { validateEmail, validatePassword, encodeBase64 } from '../../utils/valid
 const COLORS = {
   powderBlue: '#B8D3E1',
   limeYellow: '#D9E872',
-  primaryGradient: ['#B8D3E1', '#D9E872'] as [string, string],
+  primaryGradient: ['rgba(184, 211, 225, 0.7)', 'rgba(217, 232, 114, 0.7)'] as [string, string],
   text: '#2A4B5C',
   cardBg: 'rgba(184, 211, 225, 0.1)',
   logoText: '#1B4242',
@@ -94,63 +94,67 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image 
-          source={require('../../assets/images/TadamonLogo.png')}
-          style={styles.logoImage}
-        />
-        <Text style={styles.logo}>
-          Tadamon<Text style={styles.logoSpan}>Com</Text>
-        </Text>
-      </View>
+    <View style={styles.mainContainer}>
+      <LinearGradient
+        colors={COLORS.primaryGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradientBackground}
+      />
+      
+      <View style={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image 
+            source={require('../../assets/images/TadamonLogo.png')}
+            style={styles.logoImage}
+          />
+          <Text style={styles.logo}>
+            Tadamon<Text style={styles.logoSpan}>Com</Text>
+          </Text>
+        </View>
 
-      <Text style={styles.title}>Welcome Back</Text>
-      <Text style={styles.subtitle}>Login to your account</Text>
+        <Text style={styles.title}>Welcome Back</Text>
+        <Text style={styles.subtitle}>Login to your account</Text>
 
-      <View style={styles.formContainer}>
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
-        
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor={COLORS.text}
-          keyboardType="email-address"
-          value={email}
-          onChangeText={handleEmailChange}
-          maxLength={50}
-          autoCapitalize="none"
-        />
+        <View style={styles.formContainer}>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+          
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor={COLORS.text}
+            keyboardType="email-address"
+            value={email}
+            onChangeText={handleEmailChange}
+            maxLength={50}
+            autoCapitalize="none"
+          />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor={COLORS.text}
-          secureTextEntry
-          value={password}
-          onChangeText={handlePasswordChange}
-          maxLength={20}
-        />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor={COLORS.text}
+            secureTextEntry
+            value={password}
+            onChangeText={handlePasswordChange}
+            maxLength={20}
+          />
 
-        <TouchableOpacity style={styles.forgotPassword}>
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.forgotPassword}>
+            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.primaryButton} onPress={handleLogin}>
-          <LinearGradient
-            colors={COLORS.primaryGradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.buttonGradient}
-          >
-            <Text style={styles.buttonText}>Login</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-
-        <View style={styles.registerContainer}>
-          <Text style={styles.registerText}>Don't have an account? </Text>
-          <TouchableOpacity>
-            <Text style={styles.registerLink}>Register</Text>
+          <TouchableOpacity style={styles.primaryButton} onPress={handleLogin}>
+            <LinearGradient
+              colors={COLORS.primaryGradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.buttonGradient}
+            >
+              <Text style={styles.buttonText}>
+                {isLoading ? 'Loading...' : 'Login'}
+              </Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>
@@ -159,12 +163,24 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    position: 'relative',
+  },
+  gradientBackground: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
     padding: 24,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+    zIndex: 1,
   },
   logoContainer: {
     flexDirection: 'row',
@@ -244,20 +260,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.text,
     fontSize: 18,
-    fontWeight: '600',
-  },
-  registerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  registerText: {
-    color: COLORS.text,
-    fontSize: 16,
-  },
-  registerLink: {
-    color: COLORS.logoText,
-    fontSize: 16,
     fontWeight: '600',
   },
   errorText: {
