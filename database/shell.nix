@@ -1,12 +1,13 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {
-  # Add MongoDB to the shell environment
-  packages = [ pkgs.mongodb ];
+  packages = [ 
+    pkgs.docker
+   ];
 
   shellHook = ''
-    export MONGO_DATA_DIR="$PWD/mongodb-data"
-    mkdir -p "$MONGO_DATA_DIR"
-    echo "MongoDB data directory: $MONGO_DATA_DIR"
+    echo "Starting MongoDB in Docker..."
+    docker run -d -p 27017:27017 --name mongodb mongo:latest
+    echo "MongoDB is running on port 27017"
   '';
 }
