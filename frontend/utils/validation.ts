@@ -3,6 +3,8 @@ export const EMAIL_MAX_LENGTH = 50;
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 20;
 
+export const ENDPOINT = 'http://localhost:3000';
+
 export const validateEmail = (email: string): string | null => {
   if (!email) return 'Email is required';
   if (email.length > EMAIL_MAX_LENGTH) return `Email must be less than ${EMAIL_MAX_LENGTH} characters`;
@@ -35,4 +37,15 @@ export const decodeBase64 = (str: string): string => {
     console.error('Base64 decoding error:', error);
     return '';
   }
+};
+
+export const hashData = (str: string): string => {
+  // Using SHA-256 for hashing
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return hash.toString(16);
 };
