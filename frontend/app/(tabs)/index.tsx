@@ -40,6 +40,9 @@ const COLORS = {
   },
   logoText: '#1B4242', // Deeper teal for main text
   logoSpanText: '#5C8374', // Muted sage green for 'Com'
+  priorityHighBg: 'rgb(231, 229, 232)', // Add new priority high color
+  footerText: '#12372A', // Darker color for better visibility
+  copyrightText: '#2A4B5C', // Darker color for copyright text
 };
 import { 
   ScrollView, 
@@ -113,7 +116,6 @@ const App = () => {
       <LinearGradient
         colors={COLORS.primaryGradient}
         start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
         style={styles.navbar}
       >
         <View style={styles.navContainer}>
@@ -476,7 +478,7 @@ const styles = StyleSheet.create({
     borderLeftColor: COLORS.powderBlue,
   },
   priorityHigh: {
-    backgroundColor: COLORS.powderBlue,
+    backgroundColor: COLORS.priorityHighBg,
   },
   section: {
     padding: 24,
@@ -607,10 +609,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   footerLogo: {
-    fontSize: 24,
+    fontSize: 28, // Slightly larger
     fontWeight: 'bold',
-    color: COLORS.text,
+    color: COLORS.footerText, // Updated color
     marginBottom: 16,
+    textShadowColor: 'rgba(255, 255, 255, 0.2)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   footerColumns: {
     flexDirection: 'row',
@@ -633,11 +638,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   copyright: {
-    color: '#ADBC9F',
+    color: COLORS.copyrightText, // Updated color
     textAlign: 'center',
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(251, 250, 218, 0.2)',
+    borderTopColor: 'rgba(27, 66, 66, 0.2)', // Darker border
+    fontSize: 14,
+    fontWeight: '500', // Added weight for better visibility
   },
   langText: {
     color: '#12372A',
