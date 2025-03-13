@@ -1,100 +1,212 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'react-native';
+import { validateEmail, validatePassword, encodeBase64, hashData, ENDPOINT } from '../../utils/validation';
+import { Picker } from '@react-native-picker/picker';
 
 const COLORS = {
   powderBlue: '#B8D3E1',
   limeYellow: '#D9E872',
-  primaryGradient: ['#B8D3E1', '#D9E872'] as [string, string],
+  primaryGradient: ['rgba(184, 211, 225, 0.7)', 'rgba(217, 232, 114, 0.7)'] as [string, string],
   text: '#2A4B5C',
   cardBg: 'rgba(184, 211, 225, 0.1)',
   logoText: '#1B4242',
   logoSpanText: '#5C8374',
 };
 
+const USER_TYPES = [
+  { id: '', label: 'Select User Type' },
+  { id: 'user', label: 'Regular User' },
+  { id: 'affected', label: 'Affected Individual' }
+];
+
 export default function RegisterScreen() {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userType, setUserType] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleRegister = async () => {
+    try {
+      setError('');
+      setIsLoading(true);
+
+      // Basic validation
+      const emailError = validateEmail(email);
+      if (emailError) {
+        setError(emailError);
+        return;
+      }
+
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        setError(passwordError);
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setError('Passwords do not match');
+        return;
+      }
+
+      if (!userType) {
+        setError('Please select a user type');
+        return;
+      }
+
+      // Encode and hash credentials
+      const encodedEmail = encodeBase64(email.toLowerCase().trim());
+      const hashedPassword = hashData(encodeBase64(password));
+
+      const response = await fetch(ENDPOINT + '/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          email: encodedEmail,
+          password: hashedPassword,
+          userType,
+        }),
+      });
+
+      // Check content type before parsing
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Server error: Expected JSON response but got HTML");
+      }
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error('JSON Parse Error:', parseError);
+        throw new Error("Failed to parse server response");
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      Alert.alert('Success', 'Registration successful!');
+
+    } catch (err: any) {
+      const errorMessage = err.message || 'Registration failed';
+      setError(errorMessage);
+      Alert.alert('Error', errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image 
-          source={require('../../assets/images/TadamonLogo.png')}
-          style={styles.logoImage}
-        />
-        <Text style={styles.logo}>
-          Tadamon<Text style={styles.logoSpan}>Com</Text>
-        </Text>
-      </View>
+      <LinearGradient
+        colors={COLORS.primaryGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradientBackground}
+      />
+      
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image 
+            source={require('../../assets/images/TadamonLogo.png')}
+            style={styles.logoImage}
+          />
+          <Text style={styles.logo}>
+            Tadamon<Text style={styles.logoSpan}>Com</Text>
+          </Text>
+        </View>
 
-      <Text style={styles.title}>Create Account</Text>
-      <Text style={styles.subtitle}>Join the community of helpers</Text>
+        <Text style={styles.title}>Create Account</Text>
+        <Text style={styles.subtitle}>Join our community</Text>
 
-      <View style={styles.formContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Full Name"
-          placeholderTextColor={COLORS.text}
-          value={formData.fullName}
-          onChangeText={(text) => setFormData({...formData, fullName: text})}
-        />
+        <View style={styles.formContainer}>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+          
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor={COLORS.text}
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+            maxLength={50}
+            autoCapitalize="none"
+          />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor={COLORS.text}
-          keyboardType="email-address"
-          value={formData.email}
-          onChangeText={(text) => setFormData({...formData, email: text})}
-        />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor={COLORS.text}
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+            maxLength={20}
+          />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor={COLORS.text}
-          secureTextEntry
-          value={formData.password}
-          onChangeText={(text) => setFormData({...formData, password: text})}
-        />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm Password"
+            placeholderTextColor={COLORS.text}
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            maxLength={20}
+          />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Confirm Password"
-          placeholderTextColor={COLORS.text}
-          secureTextEntry
-          value={formData.confirmPassword}
-          onChangeText={(text) => setFormData({...formData, confirmPassword: text})}
-        />
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={userType}
+              onValueChange={(itemValue) => setUserType(itemValue)}
+              style={styles.picker}
+            >
+              {USER_TYPES.map((type) => (
+                <Picker.Item 
+                  key={type.id} 
+                  label={type.label} 
+                  value={type.id}
+                  color={COLORS.text}
+                />
+              ))}
+            </Picker>
+          </View>
 
-        <TouchableOpacity style={styles.primaryButton}> 
-          <LinearGradient
-            colors={COLORS.primaryGradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.buttonGradient}
+          <TouchableOpacity 
+            style={styles.primaryButton}
+            onPress={handleRegister}
+            disabled={isLoading}
           >
-            <Text style={styles.buttonText}>Create Account</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-
-        <View style={styles.loginContainer}>
-          <Text style={styles.loginText}>Already have an account? </Text>
-          <TouchableOpacity>
-            <Text style={styles.loginLink}>Login</Text>
+            <LinearGradient
+              colors={COLORS.primaryGradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.buttonGradient}
+            >
+              <Text style={styles.buttonText}>
+                {isLoading ? 'Creating Account...' : 'Register'}
+              </Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  gradientBackground: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -174,6 +286,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginBottom: 16,
+  },
   loginContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -187,5 +304,18 @@ const styles = StyleSheet.create({
     color: COLORS.logoText,
     fontSize: 16,
     fontWeight: '600',
+  },
+  pickerContainer: {
+    backgroundColor: COLORS.cardBg,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: COLORS.powderBlue,
+    marginBottom: 24,
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+    color: COLORS.text,
   },
 });

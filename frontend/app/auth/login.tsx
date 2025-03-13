@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'react-native';
-import { validateEmail, validatePassword, encodeBase64 } from '../../utils/validation';
+import { validateEmail, validatePassword, encodeBase64, ENDPOINT, hashData } from '../../utils/validation';
 
 const COLORS = {
   powderBlue: '#B8D3E1',
@@ -50,9 +50,9 @@ export default function LoginScreen() {
 
       // Encode credentials
       const encodedEmail = encodeBase64(email);
-      const encodedPassword = encodeBase64(password);
+      const hashPassword = hashData(encodeBase64(password));
 
-      const response = await fetch('YOUR_API_ENDPOINT/login', {
+      const response = await fetch(ENDPOINT + '/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export default function LoginScreen() {
         },
         body: JSON.stringify({
           email: encodedEmail,
-          password: encodedPassword,
+          password: hashPassword,
         }),
       });
 
