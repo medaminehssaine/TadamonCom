@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 const COLORS = {
   // Primary Colors
   powderBlue: '#B8D3E1',
@@ -39,6 +38,8 @@ const COLORS = {
     alignItems: 'center',
     padding: 16,
   },
+  logoText: '#1B4242', // Deeper teal for main text
+  logoSpanText: '#5C8374', // Muted sage green for 'Com'
 };
 import { 
   ScrollView, 
@@ -48,7 +49,8 @@ import {
   TouchableOpacity, 
   ImageBackground, 
   FlatList,
-  Dimensions 
+  Dimensions,
+  Image // Add Image here if not already imported
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -115,7 +117,15 @@ const App = () => {
         style={styles.navbar}
       >
         <View style={styles.navContainer}>
-          <Text style={styles.logo}>Tadamon<Text style={styles.logoSpan}>Com</Text></Text>
+          <View style={styles.logoContainer}>
+            <Image 
+              source={require('../../assets/images/TadamonLogo.png')}
+              style={styles.logoImage}
+            />
+            <Text style={styles.logo}>
+              Tadamon<Text style={styles.logoSpan}>Com</Text>
+            </Text>
+          </View>
           <TouchableOpacity style={styles.navButton}>
             <Text style={styles.navButtonText}>Login / Register</Text>
           </TouchableOpacity>
@@ -287,17 +297,20 @@ const styles = StyleSheet.create({
     elevation: 5,
     paddingBottom: 16,
     marginBottom: 0,
+    height: 80, // Add fixed height to ensure consistent navbar size
+    justifyContent: 'center', // Center content vertically
   },
   
   // Text Styles
   logo: {
-    fontSize: 24,
+    fontSize: 30, // Slightly larger for better visibility
     fontWeight: 'bold',
-    color: COLORS.text,
-    textShadowColor: 'rgba(42, 75, 92, 0.2)',
+    color: COLORS.logoText, // Dark teal color
+    textShadowColor: 'rgba(27, 66, 66, 0.15)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
+  
   
   // Buttons
   primaryButton: {
@@ -635,6 +648,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16, // Increased gap for better spacing with larger logo
+  },
+  logoImage: {
+    width: 55, // Slightly larger
+    height: 55, // Slightly larger
+    resizeMode: 'contain',
+    marginVertical: -14, // Adjusted for larger size
   },
 });
 
