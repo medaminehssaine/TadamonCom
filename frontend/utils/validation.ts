@@ -3,7 +3,7 @@ export const EMAIL_MAX_LENGTH = 50;
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 20;
 
-export const ENDPOINT = 'http://localhost:3000';
+export const ENDPOINT = 'http://localhost:3000/';
 
 export const validateEmail = (email: string): string | null => {
   if (!email) return 'Email is required';

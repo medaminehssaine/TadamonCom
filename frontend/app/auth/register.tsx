@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Linking, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'react-native';
 import { validateEmail, validatePassword, encodeBase64, hashData, ENDPOINT } from '@/utils/validation';
 import { Picker } from '@react-native-picker/picker';
+import { useRouter } from 'expo-router';
 
 const COLORS = {
   powderBlue: '#B8D3E1',
@@ -17,17 +18,33 @@ const COLORS = {
 
 const USER_TYPES = [
  
-  { id: 'user', label: 'Regular User' },
+  { id: 'donor', label: 'Donor' },
   { id: 'affected', label: 'Affected Individual' }
 ];
 
 export default function RegisterScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState('donor');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleEmailChange = (text: string) => {
+    setEmail(text.toLowerCase().trim());
+    setError('');
+  };
+
+  const handlePasswordChange = (text: string) => {
+    setPassword(text);
+    setError('');
+  };
+
+  const handleConfirmPasswordChange = (text: string) => {
+    setConfirmPassword(text);
+    setError('');
+  };
 
   const handleRegister = async () => {
     try {
@@ -61,7 +78,7 @@ export default function RegisterScreen() {
       const encodedEmail = encodeBase64(email.toLowerCase().trim());
       const hashedPassword = encodeBase64(hashData(password));
 
-      const response = await fetch(ENDPOINT + '/register', {
+      const response = await fetch(ENDPOINT + 'api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,10 +106,11 @@ export default function RegisterScreen() {
       }
 
       if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
+        throw new Error(data.message || 'Login failed');
       }
 
       Alert.alert('Success', 'Registration successful!');
+      router.push('/');
 
     } catch (err: any) {
       const errorMessage = err.message || 'Registration failed';
@@ -104,7 +122,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       <LinearGradient
         colors={COLORS.primaryGradient}
         start={{ x: 0, y: 0 }}
@@ -112,7 +130,7 @@ export default function RegisterScreen() {
         style={styles.gradientBackground}
       />
       
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
         <View style={styles.logoContainer}>
           <Image 
             source={require('../../assets/images/TadamonLogo.png')}
@@ -135,7 +153,7 @@ export default function RegisterScreen() {
             placeholderTextColor={COLORS.text}
             keyboardType="email-address"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={handleEmailChange}
             maxLength={50}
             autoCapitalize="none"
           />
@@ -146,7 +164,7 @@ export default function RegisterScreen() {
             placeholderTextColor={COLORS.text}
             secureTextEntry
             value={password}
-            onChangeText={setPassword}
+            onChangeText={handlePasswordChange}
             maxLength={20}
           />
 
@@ -156,14 +174,17 @@ export default function RegisterScreen() {
             placeholderTextColor={COLORS.text}
             secureTextEntry
             value={confirmPassword}
-            onChangeText={setConfirmPassword}
+            onChangeText={handleConfirmPasswordChange}
             maxLength={20}
           />
 
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={userType}
-              onValueChange={(itemValue) => setUserType(itemValue)}
+              onValueChange={(itemValue) => {
+                setUserType(itemValue);
+                setError('');
+              }}
               style={styles.picker}
             >
               {USER_TYPES.map((type) => (
@@ -179,7 +200,7 @@ export default function RegisterScreen() {
 
           <TouchableOpacity 
             style={styles.primaryButton}
-            onPress={handleRegister}
+            onPress={() => {handleRegister()}}
             disabled={isLoading}
           >
             <LinearGradient
@@ -189,17 +210,21 @@ export default function RegisterScreen() {
               style={styles.buttonGradient}
             >
               <Text style={styles.buttonText}>
-                {isLoading ? 'Creating Account...' : 'Register'}
+                {isLoading ? 'Loading...' : 'Register'}
               </Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    position: 'relative',
+  },
   gradientBackground: {
     position: 'absolute',
     left: 0,
@@ -209,10 +234,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
     padding: 24,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+    zIndex: 1,
   },
   logoContainer: {
     flexDirection: 'row',
@@ -288,8 +314,8 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    fontSize: 14,
-    marginBottom: 16,
+    marginBottom: 10,
+    textAlign: 'center',
   },
   loginContainer: {
     flexDirection: 'row',

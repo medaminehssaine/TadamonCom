@@ -143,17 +143,6 @@ const RegisterNeedScreen = () => {
             )}
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Title <Text style={styles.required}>*</Text></Text>
-              <TextInput
-                style={styles.input}
-                value={formData.title}
-                onChangeText={(text) => setFormData({ ...formData, title: text })}
-                placeholder="Enter need title"
-                placeholderTextColor={COLORS.placeholderText}
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
               <Text style={styles.label}>Description <Text style={styles.required}>*</Text></Text>
               <TextInput
                 style={[styles.input, styles.textArea]}

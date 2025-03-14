@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'rea
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 
+// router.push('/auth/register')
 const COLORS = {
   powderBlue: '#B8D3E1',
   limeYellow: '#D9E872',

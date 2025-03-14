@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
 
 const COLORS = {
   // Primary Colors
@@ -60,6 +61,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const { width } = Dimensions.get('window');
 
 const App = () => {
+  const router = useRouter();
   const [activeCommunityTab, setActiveCommunityTab] = useState('Active Needs');
   const [activeDonorTab, setActiveDonorTab] = useState('Urgent Needs');
   const [activeOrgTab, setActiveOrgTab] = useState('Active Operations');
@@ -135,8 +137,12 @@ const App = () => {
                 Tadamon<Text style={styles.logoSpan}>Com</Text>
               </Text>
             </View>
-          <TouchableOpacity style={styles.navButton}>
-            <Text style={styles.navButtonText}>Login / Register</Text>
+            {/* sefioseeeeeesiiiiiiiiiiiiiiiii */}
+          <TouchableOpacity
+            style={styles.navButton}
+            onPress={() => router.push("/home")}
+          >
+            <Text style={styles.navButtonText}>Logout</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -144,24 +150,30 @@ const App = () => {
           <Text style={styles.heroTitle}>Make Good Intentions Matter</Text>
           <Text style={styles.heroText}>Connecting communities, donors, and relief organizations</Text>
           <View style={styles.buttonGroup}>
-            <TouchableOpacity style={styles.primaryButton}>
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={() => router.push("/items/NeedsFormScreen")}
+            >
               <LinearGradient
-                colors={COLORS.primaryGradient}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.buttonGradient}
+              colors={COLORS.primaryGradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.buttonGradient}
               >
-                <Text style={styles.buttonText}>Register a Need</Text>
+              <Text style={styles.buttonText}>Register a Need</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton}>
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={() => router.push("/payment/payme")}
+            >
               <LinearGradient
-                colors={COLORS.reverseGradient}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={styles.buttonGradient}
+              colors={COLORS.reverseGradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.buttonGradient}
               >
-                <Text style={styles.buttonText}>Make a Donation</Text>
+              <Text style={styles.buttonText}>Make a Donation</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -200,7 +212,9 @@ const App = () => {
       <View style={styles.section}>
         <View style={styles.dashboardHeader}>
           <Text style={styles.dashboardTitle}>Community Dashboard</Text>
-          <TouchableOpacity style={styles.primaryButton}>
+            <TouchableOpacity
+            style={styles.primaryButton}
+            >
             <LinearGradient
               colors={COLORS.primaryGradient}
               start={{ x: 0, y: 0 }}
@@ -209,7 +223,7 @@ const App = () => {
             >
               <Text style={styles.buttonText}>+ Register New Need</Text>
             </LinearGradient>
-          </TouchableOpacity>
+            </TouchableOpacity>
         </View>
         <View style={styles.tabContainer}>
           {['Active Needs', 'Fulfilled Needs', 'All Needs'].map((tab) => (

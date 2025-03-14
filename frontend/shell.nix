@@ -17,6 +17,7 @@ pkgs.mkShell {
     pkgs.jdk
     pkgs.nodejs
     pkgs.python312Packages.requests
+    pkgs.python312Packages.flask
 
   ];
 

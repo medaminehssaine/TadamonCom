@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'react-native';
 import { validateEmail, validatePassword, encodeBase64, ENDPOINT, hashData } from '@/utils/validation';
+import { useRouter } from 'expo-router';
 
 const COLORS = {
   powderBlue: '#B8D3E1',
@@ -15,6 +16,7 @@ const COLORS = {
 };
 
 export default function LoginScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -52,7 +54,7 @@ export default function LoginScreen() {
       const encodedEmail = encodeBase64(email);
       const hashPassword = hashData(encodeBase64(password));
 
-      const response = await fetch(ENDPOINT + '/login', {
+      const response = await fetch(ENDPOINT + 'api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,6 +85,7 @@ export default function LoginScreen() {
       }
 
       console.log('Login successful:', data);
+      router.push('/');
 
     } catch (err: any) {
       const errorMessage = err.message || 'Something went wrong';
@@ -144,7 +147,7 @@ export default function LoginScreen() {
             <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.primaryButton} onPress={handleLogin}>
+          <TouchableOpacity style={styles.primaryButton} onPress={() => {handleLogin()}}>
             <LinearGradient
               colors={COLORS.primaryGradient}
               start={{ x: 0, y: 0 }}

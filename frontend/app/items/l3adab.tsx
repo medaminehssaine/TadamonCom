@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Animated, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 
 // Types for needs proposals
 type NeedProposal = {
@@ -76,6 +77,7 @@ const TEST_NEEDS: NeedProposal[] = [
 ];
 
 export default function NeedsManagerScreen() {
+  const router = useRouter();
   const [needs, setNeeds] = useState(TEST_NEEDS);
   const [selectedNeed, setSelectedNeed] = useState<NeedProposal | null>(null);
   const [fadeAnims] = useState<{ [key: string]: Animated.Value }>({});
@@ -93,6 +95,7 @@ export default function NeedsManagerScreen() {
 
   const handleInitialDecision = (id: string, isApproved: boolean) => {
     if (!isApproved) {
+      router.push("/home")
       Alert.alert(
         'Confirm Rejection',
         'Are you sure you want to reject this need?',
@@ -240,18 +243,12 @@ export default function NeedsManagerScreen() {
       </View>
 
       <View style={styles.actionsWrapper}>
-        <TouchableOpacity 
-          style={[styles.actionButton, styles.rejectBtn]}
-          onPress={() => handleInitialDecision(item.id, false)}
-        >
-          <Text style={styles.actionButtonText}>Reject</Text>
-        </TouchableOpacity>
         
         <TouchableOpacity 
           style={[styles.actionButton, styles.acceptBtn]}
-          onPress={() => handleInitialDecision(item.id, true)}
+          onPress={() => router.push(`/pay/${item.id}`)}
         >
-          <Text style={styles.actionButtonText}>Accept</Text>
+          <Text style={styles.actionButtonText}>Pay</Text>
         </TouchableOpacity>
       </View>
     </Animated.View>
